@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block page_content %}
 <div class="col-md-8 offset-md-2">
 	<h1>{{ post.title }}</h1>
 	<small>
 	{{ post.created_on.date }} |&nbsp;
-	Categories:&nbsp;
+	{% trans "Categories:" %}&nbsp;
 	{% for category in post.categories.all %}
 		<a href="{% url 'blog_category' category.name %}">
 			{{ category.name }}
@@ -13,7 +14,7 @@
 	{% endfor %}
 	</small>
 	<p>{{ post.body | linebreaks }}</p>
-	<h3>Leave a comment:</h3>
+	<h3>{% trans "Leave a comment:" %}</h3>
 	<form action="/blog/{{ post.pk }}/" method="post">
 		{% csrf_token %}
 		<div class="form-group">
@@ -24,11 +25,11 @@
 		</div>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
-	<h3>Comments:</h3>
+	<h3>{% trans "Comments" %}</h3>
 	{% for comment in comments %}
 		<p>
 			On {{ comment.created_on.date }}&nbsp;
-			<b>{{ comment.author }}</b> wrote:
+			<b>{{ comment.author }}</b> {% trans "wrote:" %}
 		</p>
 		<p>{{ comment.body }}</p>
 		<hr>
